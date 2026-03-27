@@ -5,19 +5,18 @@ class Tarefa(models.Model):
     titulo = models.CharField(
         max_length=30,
         null=False,
-        blank=False,
+        blank=False
     )
 
-    desc = models.CharField(
-        max_length=255,
+    descricao = models.CharField(
+        max_length=500,
         null=False,
-        blank=False,
+        blank=False
     )
 
-    data_vencimento = models.DateField(
-        
-    )
+    data = models.DateField()
 
-    status = models.BooleanField(
-   
-    )
+    status = models.BooleanField()
+
+    def __str__(self):
+        return self.titulo
