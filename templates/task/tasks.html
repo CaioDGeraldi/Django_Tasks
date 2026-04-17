@@ -128,7 +128,53 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a class="btn btn-success" href="{% url 'create' %}">Nova Tarefa</a>
+
+        <!-- Modal Criar Tarefa -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
+            Nova Tarefa
+        </button>
+
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">Adicionar Nova Tarefa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{% url 'create' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título da Tarefa</label>
+                                <input type="text" name="titulo" class="form-control" id="titulo" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea name="descricao" class="form-control" id="descricao" rows="3"
+                                    placeholder="Opcional"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="data" class="form-label">Data de Vencimento</label>
+                                <input type="date" name="data" class="form-control" id="data" required>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="status" id="status">
+                                <label class="form-check-label" for="status">
+                                    Já está concluída?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Criar Tarefa</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
