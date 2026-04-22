@@ -1,9 +1,9 @@
 # Django Tasks
 
-### Super User: 
+### Super User: TaskManager
 
 
-### Password: 
+### Password: Task
 
 ---
 
