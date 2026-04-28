@@ -5,18 +5,19 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def task_list(request):
-    tarefas = Tarefa.objects.all()
+    tarefas = Tarefa.objects.filter(usuario = request.user)
     return render(request, 'task/tasks.html', {'tarefas':tarefas})
 
 @login_required
 def create_task(request):
     form = TarefaForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('index')
+    if request.method == 'POST' and form.is_valid():
+        tarefa = form.save(commit= False)
+        tarefa.usuario = request.user
+        tarefa.save()
+        return redirect('index')
         
-    return render(request, 'task/create_task.html', {'tarefa':form})
+    return render(request, 'task/tasks.html', {'tarefa':form})
 
 @login_required
 def delete_task(request, id):
