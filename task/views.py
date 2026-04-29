@@ -11,10 +11,11 @@ def task_list(request):
 @login_required
 def create_task(request):
     form = TarefaForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        tarefa = form.save(commit= False)
-        tarefa.usuario = request.user
-        tarefa.save()
+    if request.method == 'POST':
+        if form.is_valid():
+            tarefa = form.save(commit= False)
+            tarefa.usuario = request.user
+            tarefa.save()
         return redirect('index')
         
     return render(request, 'task/tasks.html', {'tarefa':form})
