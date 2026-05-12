@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import task_list, create_task, edit_task, delete_task
+from .views import task_list, create_task, edit_task, delete_task, register
 
 urlpatterns = [
     path('', task_list, name='index'),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('edit/<int:id>', edit_task, name='edit'),
     path('delete/<int:id>', delete_task, name='delete'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', register, name='register'),
 ]

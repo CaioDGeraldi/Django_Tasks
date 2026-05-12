@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 from task.models import Tarefa
 from task.forms import TarefaForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 @login_required
 def task_list(request):
@@ -29,12 +30,20 @@ def delete_task(request, id):
 @login_required
 def edit_task(request, id):
     tarefa = get_object_or_404(Tarefa, id=id, usuario = request.user)
+    form = TarefaForm(request.POST or None, instance=tarefa)
     if request.method == 'POST':
-        tarefa.titulo = request.POST.get('titulo')
-        tarefa.descricao = request.POST.get('descricao')
-        tarefa.data = request.POST.get('data')
-        tarefa.status = 'status' in request.POST
-        tarefa.save()
-        return redirect('index')
-    
-    return redirect('index')
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        return render(request, 'task/tasks.html', {'task': tarefa, 'tarefa':form})
+    return redirect('index', {'task': tarefa})
+
+def register(request):
+    form = UserCreationForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'registration/register.html')
+
