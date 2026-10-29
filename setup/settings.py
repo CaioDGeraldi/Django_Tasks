@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_-qv&5r7zhv^lbvfg2$nd-fgl@p6t7a$^a*+&w(dne))qly&g-'
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -65,9 +65,9 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tasksdb',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'NAME': os.environ.get("MYSQL_DATABASE", "tasksdb"),
+        'USER': os.environ.get("MYSQL_USER", "root"),
+        'PASSWORD': os.environ.get("MYSQL_PASSWORD", ""),
         'HOST': 'localhost',
         'PORT': 3306
     }
